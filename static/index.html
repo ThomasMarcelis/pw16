@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elections 2016</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" media="all" href="css/reset.css">
+    <link rel="stylesheet" media="all" href="css/style.css">
+    <style>
+  #data {
+    text-align: center;
+  }
+</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+
+  console.log('trump');
+
+	window.onload = function setDataSource() {
+		if (!!window.EventSource) {
+			var source = new EventSource("/");
+
+			source.addEventListener("message", function(e) {
+				logMessage(e);
+			}, false);
+
+			source.addEventListener("open", function(e) {
+				logMessage("OPENED");
+			}, false);
+
+			source.addEventListener("error", function(e) {
+				logMessage("ERROR");
+				if (e.readyState == EventSource.CLOSED) {
+					logMessage("CLOSED");
+				}
+			}, false);
+    }
+  }
+
+	function logMessage(obj) {
+		var el = document.getElementById("data");
+    el.innerHTML = obj.lastEventId + " - " + obj.data + "<br>" + el.innerHTML;
+	}
+</script>
+</head>
+<body>
+    <header>
+        <h1>Elections 2016</h1>
+    </header>
+    <nav>
+        <ul>
+            <li class="current"><a href="index.html">Home</a></li>
+            <li><a href="info.html">Information about candidates</a></li>
+            <li class="dropdown"><a href="#">Data &#9660;</a>
+                <div class="dropdown-content">
+                    <a href="supertuesday.html">Super Tuesday</a>
+                    <a href="opinions.html">Opinions</a>
+                    <a href="popularity.html">Popularity</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <article>
+            <p id="data"></p>
+        </article>
+    </main>
+    <footer>The Chillies | #TIHack16 | 2016</footer>
+</body>
+</html> 
